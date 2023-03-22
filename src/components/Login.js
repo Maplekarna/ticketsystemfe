@@ -21,7 +21,7 @@ class Login extends React.Component {
         })
     }
 
-    onFinsh = (data) => {
+    onFinish = (data) => {
         login(data).then(
             (data) => {
                 this.setState(
@@ -45,7 +45,7 @@ class Login extends React.Component {
     render = () => {
         return (
             <React.Fragment>
-                <Button shape="round" onClick={this.signinOnClick} style={{ marginRight: '20px' }}>
+                <Button shape="round" onClick={this.signinOnClick} style={{ marginRight: '20px'}}>
                     Login
                 </Button>
 
@@ -85,6 +85,7 @@ class Login extends React.Component {
                                 Login
                             </Button>
                         </Form.Item>
+
                     </Form>
 
                 </Modal>

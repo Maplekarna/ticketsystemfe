@@ -1,48 +1,136 @@
 import React from 'react';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import {Button, Layout, message, Row, Col, Menu, Table} from 'antd';
 import Login from './components/Login';
+import Register from './components/Register';
+import {logout, getMovieList, getStatistic, getOrderHistory } from './utils';
+import ShowTable from "./components/ShowTable";
 
-const { Header, Content, Footer } = Layout;
 
-const App = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
-  return (
-      <Layout>
-        <Header style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}>
-          <div
-              style={{
-                float: 'left',
-                width: 120,
-                height: 31,
-                margin: '16px 24px 16px 0',
-                background: 'rgba(255, 255, 255, 0.2)',
-              }}
+const { Header, Content, Sider } = Layout;
+
+let dataSource = [];
+let columns = [];
+
+const columns3 = [
+    {
+        title: 'Order_id',
+        dataIndex: 'order_id',
+        key: 'order_id',
+    },
+    {
+        title: 'Movie_name',
+        dataIndex: 'movie_name',
+        key: 'movie_name',
+    },
+    {
+        title: 'Showing_id',
+        dataIndex: 'showing_id',
+        key: 'showing_id',
+    },
+    {
+        title: 'Nickname',
+        dataIndex: 'nickname',
+        key: 'nickname',
+    },
+    {
+        title: 'Count',
+        dataIndex: 'count',
+        key: 'count',
+    },
+    {
+        title: 'Booking_time',
+        dataIndex: 'booking_time',
+        key: 'booking_time',
+    },
+
+];
+
+class App extends React.Component {
+  state = {
+    loggedIn: false
+  }
+
+
+  signinOnSuccess = () => {
+      this.setState(
+          {
+              loggedIn: true,
+          }
+      )
+  }
+
+  signoutOnClick = () => {
+    logout()
+      .then(() => {
+        this.setState({
+            loggedIn : false
+        });
+        message.success(`Successfull signed out`);
+      }).catch((err) => {
+        message.error(err.message);
+      })
+  }
+
+
+
+    onOrderSelect = () => {
+        getOrderHistory().then(
+            (data) => {
+                this.setState(
+                    {
+                        orderHistory: data,
+                    }
+                )
+                dataSource = this.state.orderHistory;
+                columns = columns3;
+            }
+        ).catch((err) => {
+            message.error(err.message);
+        })
+
+    }
+
+render = () => (
+  <Layout>
+    <Header>
+      <Row justify="space-between">
+        <Col>
+          {
+          this.state.loggedIn ?
+          <Button shape="round" onClick={this.signoutOnClick}>
+            Logout
+          </Button> :
+          (
+            <>
+            <Login onSuccess={this.signinOnSuccess} />
+            <Register />
+            
+            </>
+          )
+        }
+        </Col>
+      </Row>
+    </Header>
+
+    <Layout>
+      <Layout style={{ padding: '24px' }}>
+          <ShowTable
+            loggedIn = {this.state.loggedIn}
           />
-          <Menu
-              theme="dark"
-              mode="horizontal"
-              defaultSelectedKeys={['2']}
-              items={new Array(3).fill(null).map((_, index) => ({
-                key: String(index + 1),
-                label: `nav ${index + 1}`,
-              }))}
-          />
-        </Header>
-        
-        <Content className="site-layout" style={{ padding: '0 50px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <div style={{ padding: 24, minHeight: 1000, background: colorBgContainer }}>Content</div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>Ticket System ©2023 Created by Shuai F. </Footer>
+
+          <Button shape="round" onClick={this.onOrderSelect}>
+            My Orders
+          </Button>
+
+
+        <Table dataSource={dataSource} columns={columns} />
+
       </Layout>
-  );
-};
 
+    </Layout>
+    
+  </Layout>
+)
+}
 export default App;

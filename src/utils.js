@@ -26,7 +26,7 @@ export const login = (credential) => {
 // 2. register function
 const registerUrl = `${SERVER_ORIGIN}/register`;
 export const register = (data) => {
-    const information = fetch(registerUrl, {
+    return fetch(registerUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export const register = (data) => {
                 throw Error('Fail to register');
             }
         });
-    return information;
+
 }
 
 
@@ -89,7 +89,12 @@ export const makeOrder = (data) => {
 const historyUrl = `${SERVER_ORIGIN}/orderHistory`;
 export const getOrderHistory = () => {
     return fetch(historyUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
         credentials: 'include',
+
     }).then((response) => {
         if (response.status !== 200) {
             throw Error('Fail to get order history');
@@ -102,7 +107,7 @@ export const getOrderHistory = () => {
 // 7. show statistic function
 const statisticUrl = `${SERVER_ORIGIN}/statistics`;
 export const getStatistic = () => {
-    return fetch(moviesUrl).then((response) => {
+    return fetch(statisticUrl).then((response) => {
         if (response.status !== 200) {
             throw Error('Fail to get statistics');
         }
