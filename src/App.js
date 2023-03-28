@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import {logout, getMovieList, getStatistic, getOrderHistory } from './utils';
 import ShowTable from "./components/ShowTable";
+import Movie from "./components/Movie";
 
 
 
@@ -119,12 +120,15 @@ render = () => (
             loggedIn = {this.state.loggedIn}
           />
 
+
+          <Movie/>
+
           <Button shape="round" onClick={this.onOrderSelect}>
-            My Orders
+              My Orders
           </Button>
 
 
-        <Table dataSource={dataSource} columns={columns} />
+          <Table dataSource={dataSource} columns={columns} />
 
       </Layout>
 

@@ -94,7 +94,6 @@ export const getOrderHistory = () => {
             'Content-Type': 'application/json',
         },
         credentials: 'include',
-
     }).then((response) => {
         if (response.status !== 200) {
             throw Error('Fail to get order history');

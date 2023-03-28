@@ -139,6 +139,7 @@ class ShowTable extends React.Component {
                     this.setState(
                         {
                             orderHistory: data,
+                            loggedId: true,
                         }
                     )
                     dataSource = this.state.orderHistory;
