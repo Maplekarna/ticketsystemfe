@@ -96,6 +96,9 @@ export const getOrderHistory = () => {
         credentials: 'include',
     }).then((response) => {
         if (response.status !== 200) {
+            if (response.status === 403) {
+                throw Error('Please login');
+            }
             throw Error('Fail to get order history');
         }
         return response.json();
@@ -106,7 +109,13 @@ export const getOrderHistory = () => {
 // 7. show statistic function
 const statisticUrl = `${SERVER_ORIGIN}/statistics`;
 export const getStatistic = () => {
-    return fetch(statisticUrl).then((response) => {
+    return fetch(statisticUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    }).then((response) => {
         if (response.status !== 200) {
             throw Error('Fail to get statistics');
         }

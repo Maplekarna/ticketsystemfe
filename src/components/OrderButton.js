@@ -39,21 +39,20 @@ const OrderButton = (props) => {
     });
   };
 
+  const updateMovie = () => {
+    props.updatMovie();
+  }
+
 
   const onFinish = (data) => {
-
     const info = {
       'showing_id': props.showing_id,
       'count': data.count,
       'price': props.price
     }
 
-    console.log(typeof(info.showing_id));
-    console.log(typeof(info.count));
-    console.log(typeof(info.price));
-
     makeOrder(info).then(() => {
-      // to do.
+      updateMovie();
     }).catch(err => {
       message.error(err.message)
     });

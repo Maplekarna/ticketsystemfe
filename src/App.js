@@ -1,51 +1,17 @@
 import React from 'react';
-import {Button, Layout, message, Row, Col, Menu, Table} from 'antd';
+import {Button, Layout, message, Row, Col} from 'antd';
 import Login from './components/Login';
 import Register from './components/Register';
-import {logout, getMovieList, getStatistic, getOrderHistory } from './utils';
-import ShowTable from "./components/ShowTable";
+import {logout} from './utils';
+
 import Movie from "./components/Movie";
+import Order from "./components/Order";
+import Statistics from "./components/Statistics";
 
 
 
-const { Header, Content, Sider } = Layout;
+const { Header } = Layout;
 
-let dataSource = [];
-let columns = [];
-
-const columns3 = [
-    {
-        title: 'Order_id',
-        dataIndex: 'order_id',
-        key: 'order_id',
-    },
-    {
-        title: 'Movie_name',
-        dataIndex: 'movie_name',
-        key: 'movie_name',
-    },
-    {
-        title: 'Showing_id',
-        dataIndex: 'showing_id',
-        key: 'showing_id',
-    },
-    {
-        title: 'Nickname',
-        dataIndex: 'nickname',
-        key: 'nickname',
-    },
-    {
-        title: 'Count',
-        dataIndex: 'count',
-        key: 'count',
-    },
-    {
-        title: 'Booking_time',
-        dataIndex: 'booking_time',
-        key: 'booking_time',
-    },
-
-];
 
 class App extends React.Component {
   state = {
@@ -74,24 +40,6 @@ class App extends React.Component {
   }
 
 
-
-    onOrderSelect = () => {
-        getOrderHistory().then(
-            (data) => {
-                this.setState(
-                    {
-                        orderHistory: data,
-                    }
-                )
-                dataSource = this.state.orderHistory;
-                columns = columns3;
-            }
-        ).catch((err) => {
-            message.error(err.message);
-        })
-
-    }
-
 render = () => (
   <Layout>
     <Header>
@@ -116,19 +64,15 @@ render = () => (
 
     <Layout>
       <Layout style={{ padding: '24px' }}>
-          <ShowTable
-            loggedIn = {this.state.loggedIn}
-          />
+
 
 
           <Movie/>
 
-          <Button shape="round" onClick={this.onOrderSelect}>
-              My Orders
-          </Button>
+          <Order loggedIn = {this.state.loggedIn}/>
 
+          <Statistics/>
 
-          <Table dataSource={dataSource} columns={columns} />
 
       </Layout>
 
