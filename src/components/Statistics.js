@@ -38,7 +38,7 @@ class Statistics extends React.Component {
                 this.setState(
                     {
                         loggedIn: true,
-                        statistics: data,
+                        statistics: data.data,
                     }
                 )
             }

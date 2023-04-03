@@ -51,7 +51,7 @@ class Order extends React.Component {
                 (data) => {
                     this.setState(
                         {
-                            orderHistory: data,
+                            orderHistory: data.data,
                             loggedId: true,
                         }
 

@@ -30,7 +30,7 @@ class Login extends React.Component {
                     }
                 )
                 
-                message.success(`Welcome back, ${data.nickname}`);
+                message.success(`Welcome back, ${data.data.nickname}`);
 
                 this.props.onSuccess();
 

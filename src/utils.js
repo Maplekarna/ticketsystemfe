@@ -4,7 +4,7 @@ const SERVER_ORIGIN = '';
 const loginUrl = `${SERVER_ORIGIN}/login`;
 export const login = (credential) => {
 
-    const information = fetch(loginUrl, {
+    return fetch(loginUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -20,7 +20,6 @@ export const login = (credential) => {
         }
     )
 
-    return information;
 }
 
 // 2. register function
@@ -69,8 +68,9 @@ export const getMovieList = () => {
 
 
 // 5. make order function
+const makeOrderUrl = `${SERVER_ORIGIN}/makeOrder`;
 export const makeOrder = (data) => {
-    return fetch(moviesUrl, {
+    return fetch(makeOrderUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

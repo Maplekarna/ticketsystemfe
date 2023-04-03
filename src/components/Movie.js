@@ -59,7 +59,7 @@ class Movie extends React.Component {
             (data) => {
                 this.setState(
                     {
-                        movieList: data,
+                        movieList: data.data,
                     }
                 )
             }
