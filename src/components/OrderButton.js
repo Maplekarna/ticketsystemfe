@@ -47,8 +47,7 @@ const OrderButton = (props) => {
   const onFinish = (data) => {
     const info = {
       'showing_id': props.showing_id,
-      'count': data.count,
-      'price': props.price
+      'count': data.count
     }
 
     makeOrder(info).then(() => {
