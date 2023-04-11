@@ -1,5 +1,5 @@
 import React from "react";
-import {getMovieList} from "../utils";
+import {getMovieList, movieOnPage} from "../utils";
 import {Button, message, Space, Table} from "antd";
 import OrderButton from "./OrderButton";
 
@@ -13,6 +13,8 @@ class Movie extends React.Component {
         this.state = {
             loggedIn: props.loggedIn,
             movieList: [],
+            page: 1,
+            pageSize: 2,
         }
     }
 
@@ -43,15 +45,21 @@ class Movie extends React.Component {
             key: 'price',
         },
         {
+            title: 'Version',
+            dataIndex: 'version',
+            key: 'version',
+        },
+        {
             title: 'Count',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <OrderButton showing_id={record.showing_id} remaining={record.remaining} price={record.price} updatMovie={this.onMovieSelect}/>
+                    <OrderButton showing_id={record.showing_id} remaining={record.remaining} price={record.price} updatMovie={this.onPageSelect} version={record.version} page={this.state.page}/>
                 </Space>
             ),
         },
-    ];
+
+    ].filter(col => col.dataIndex !== 'version');
 
 
     onMovieSelect = () => {
@@ -63,8 +71,20 @@ class Movie extends React.Component {
                     }
                 )
             }
+        ).catch((err) => {
+            message.error(err.message);
+        })
+    }
 
-
+    onPageSelect = (page) => {
+        movieOnPage(page).then(
+            (data) => {
+                this.setState(
+                    {
+                        movieList: data.data,
+                    }
+                )
+            }
         ).catch((err) => {
             message.error(err.message);
         })
@@ -79,7 +99,24 @@ class Movie extends React.Component {
                     Movie List
                 </Button>
 
-                <Table dataSource={this.state.movieList} columns={this.columns} />
+                <Table
+                    dataSource={this.state.movieList}
+                    columns={this.columns}
+                    pagination={{
+                        pageSize: this.state.pageSize,
+                        total: 50,
+                        onChange: (page) => {
+                            this.setState(
+                                {
+                                    page: page,
+                                }
+                            )
+
+                            this.onPageSelect(page - 1)
+                        }
+
+                    }}
+                />
 
             </>
 

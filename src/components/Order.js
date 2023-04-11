@@ -24,9 +24,9 @@ const columns = [
         key: 'nickname',
     },
     {
-        title: 'Count',
-        dataIndex: 'count',
-        key: 'count',
+        title: 'Amount',
+        dataIndex: 'amount',
+        key: 'amount',
     },
     {
         title: 'Booking_time',

@@ -124,6 +124,19 @@ export const getStatistic = () => {
 }
 
 
+const showMovieOnPageUrl = `${SERVER_ORIGIN}/moviesOnPage?page=`;
+
+export const movieOnPage = (page) => {
+    return fetch(`${showMovieOnPageUrl}${page}`).then((response) => {
+        if (response.status !== 200) {
+            throw Error('Fail to find the game');
+        }
+
+        return response.json();
+    });
+}
+
+
 
 
 

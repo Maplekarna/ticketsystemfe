@@ -39,19 +39,20 @@ const OrderButton = (props) => {
     });
   };
 
-  const updateMovie = () => {
-    props.updatMovie();
+  const updateMovie = (page) => {
+    props.updatMovie(page);
   }
 
 
   const onFinish = (data) => {
     const info = {
       'showing_id': props.showing_id,
-      'count': data.count
+      'count': data.count,
+      'version': props.version,
     }
 
     makeOrder(info).then(() => {
-      updateMovie();
+      updateMovie(props.page - 1);
     }).catch(err => {
       message.error(err.message)
     });
