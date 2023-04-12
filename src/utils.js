@@ -66,6 +66,18 @@ export const getMovieList = () => {
     })
 }
 
+const showMovieOnPageUrl = `${SERVER_ORIGIN}/moviesOnPage?page=`;
+
+export const movieOnPage = (page) => {
+    return fetch(`${showMovieOnPageUrl}${page}`).then((response) => {
+        if (response.status !== 200) {
+            throw Error('Fail to find the game');
+        }
+
+        return response.json();
+    });
+}
+
 
 // 5. make order function
 const makeOrderUrl = `${SERVER_ORIGIN}/makeOrder`;
@@ -106,6 +118,27 @@ export const getOrderHistory = () => {
 }
 
 
+const historyOnPageUrl = `${SERVER_ORIGIN}/moviesOnPage?page=`;
+export const getHistoryOnPage = (page) => {
+    return fetch(`${historyOnPageUrl}${page}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    }).then((response) => {
+        if (response.status !== 200) {
+            if (response.status === 403) {
+                throw Error('Please login');
+            }
+            throw Error('Fail to get order history');
+        }
+        return response.json();
+    })
+}
+
+
+
 // 7. show statistic function
 const statisticUrl = `${SERVER_ORIGIN}/statistics`;
 export const getStatistic = () => {
@@ -124,20 +157,22 @@ export const getStatistic = () => {
 }
 
 
-const showMovieOnPageUrl = `${SERVER_ORIGIN}/moviesOnPage?page=`;
 
-export const movieOnPage = (page) => {
-    return fetch(`${showMovieOnPageUrl}${page}`).then((response) => {
+const statisticOnPageUrl = `${SERVER_ORIGIN}/statisticsOnPage?page=`;
+export const getStatisticOnPage = (page) => {
+    return fetch(`${statisticOnPageUrl}${page}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    }).then((response) => {
         if (response.status !== 200) {
-            throw Error('Fail to find the game');
+            throw Error('Fail to get statistics');
         }
-
         return response.json();
-    });
+    })
 }
-
-
-
 
 
 

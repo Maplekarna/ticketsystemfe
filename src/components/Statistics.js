@@ -1,5 +1,5 @@
 import React from "react";
-import {getStatistic} from "../utils";
+import {getStatistic, getStatisticOnPage} from "../utils";
 import {Button, message, Table} from "antd";
 
 const columns = [
@@ -28,6 +28,8 @@ class Statistics extends React.Component {
         this.state = {
             loggedIn: props.loggedIn,
             statistics: [],
+            page: 1,
+            pageSize: 5,
         }
     }
 
@@ -48,6 +50,21 @@ class Statistics extends React.Component {
     }
 
 
+    onPageSelect = (page) => {
+        getStatisticOnPage(page).then(
+            (data) => {
+                this.setState(
+                    {
+                        statistics: data.data,
+                    }
+                )
+            }
+        ).catch((err) => {
+            message.error(err.message);
+        })
+    }
+
+
 
 
     render = () => {
@@ -58,7 +75,24 @@ class Statistics extends React.Component {
                     Statistics
                 </Button>
 
-                <Table dataSource={this.state.statistics} columns={columns} />
+                <Table
+                    dataSource={this.state.statistics}
+                    columns={columns}
+                    pagination={{
+                        pageSize: this.state.pageSize,
+                        total: 50,
+                        onChange: (page) => {
+                            this.setState(
+                                {
+                                    page: page,
+                                }
+                            )
+
+                            this.onPageSelect(page - 1)
+                        }
+
+                    }}
+                />
 
             </>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {getOrderHistory, } from "../utils";
+import {getHistoryOnPage, getOrderHistory, movieOnPage,} from "../utils";
 import {Button, message, Table} from "antd";
 
 const columns = [
@@ -42,6 +42,8 @@ class Order extends React.Component {
         this.state = {
             loggedIn: props.loggedIn,
             orderHistory: [],
+            page: 1,
+            pageSize: 4,
         }
     }
 
@@ -61,9 +63,21 @@ class Order extends React.Component {
             ).catch((err) => {
                 message.error(err.message);
             })
+    }
 
-
-
+    onPageSelect = (page) => {
+        getHistoryOnPage(page).then(
+            (data) => {
+                this.setState(
+                    {
+                        orderHistory: data.data,
+                        loggedId: true,
+                    }
+                )
+            }
+        ).catch((err) => {
+            message.error(err.message);
+        })
     }
 
 
@@ -75,7 +89,24 @@ class Order extends React.Component {
                 </Button>
 
 
-                <Table dataSource={this.state.orderHistory} columns={columns} />
+                <Table
+                    dataSource={this.state.orderHistory}
+                    columns={columns}
+                    pagination={{
+                        pageSize: this.state.pageSize,
+                        total: 50,
+                        onChange: (page) => {
+                            this.setState(
+                                {
+                                    page: page,
+                                }
+                            )
+
+                            this.onPageSelect(page - 1)
+                        }
+
+                    }}
+                />
             </>
 
 
