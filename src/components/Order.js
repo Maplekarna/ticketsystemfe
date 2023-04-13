@@ -1,40 +1,8 @@
 import React from "react";
-import {getHistoryOnPage, getOrderHistory, movieOnPage,} from "../utils";
+import {getHistoryOnPage, getOrderHistory,} from "../utils";
 import {Button, message, Table} from "antd";
 
-const columns = [
-    {
-        title: 'Order_id',
-        dataIndex: 'order_id',
-        key: 'order_id',
-    },
-    {
-        title: 'Movie_name',
-        dataIndex: 'movie_name',
-        key: 'movie_name',
-    },
-    {
-        title: 'Showing_id',
-        dataIndex: 'showing_id',
-        key: 'showing_id',
-    },
-    {
-        title: 'Nickname',
-        dataIndex: 'nickname',
-        key: 'nickname',
-    },
-    {
-        title: 'Amount',
-        dataIndex: 'amount',
-        key: 'amount',
-    },
-    {
-        title: 'Booking_time',
-        dataIndex: 'booking_time',
-        key: 'booking_time',
-    },
 
-];
 
 class Order extends React.Component {
     constructor(props) {
@@ -43,9 +11,43 @@ class Order extends React.Component {
             loggedIn: props.loggedIn,
             orderHistory: [],
             page: 1,
-            pageSize: 4,
+            pageSize: 5,
         }
     }
+
+    columns = [
+        {
+            title: 'Order_id',
+            dataIndex: 'order_id',
+            key: 'order_id',
+        },
+        {
+            title: 'Movie_name',
+            dataIndex: 'movie_name',
+            key: 'movie_name',
+        },
+        {
+            title: 'Showing_id',
+            dataIndex: 'showing_id',
+            key: 'showing_id',
+        },
+        {
+            title: 'Nickname',
+            dataIndex: 'nickname',
+            key: 'nickname',
+        },
+        {
+            title: 'Amount',
+            dataIndex: 'amount',
+            key: 'amount',
+        },
+        {
+            title: 'Booking_time',
+            dataIndex: 'booking_time',
+            key: 'booking_time',
+        },
+
+    ];
 
 
     onOrderSelect = () => {
@@ -91,7 +93,7 @@ class Order extends React.Component {
 
                 <Table
                     dataSource={this.state.orderHistory}
-                    columns={columns}
+                    columns={this.columns}
                     pagination={{
                         pageSize: this.state.pageSize,
                         total: 50,

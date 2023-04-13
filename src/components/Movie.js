@@ -14,7 +14,7 @@ class Movie extends React.Component {
             loggedIn: props.loggedIn,
             movieList: [],
             page: 1,
-            pageSize: 2,
+            pageSize: 4,
         }
     }
 
@@ -28,6 +28,11 @@ class Movie extends React.Component {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
+        },
+        {
+            title: 'ScheduleId',
+            dataIndex: 'scheduleId',
+            key: 'scheduleId',
         },
         {
             title: 'Time',
@@ -49,17 +54,18 @@ class Movie extends React.Component {
             dataIndex: 'version',
             key: 'version',
         },
+
         {
             title: 'Count',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <OrderButton showing_id={record.showing_id} remaining={record.remaining} price={record.price} updatMovie={this.onPageSelect} version={record.version} page={this.state.page}/>
+                    <OrderButton showing_id={record.showing_id} remaining={record.remaining} price={record.price} updatMovie={this.onPageSelect} version={record.version} page={this.state.page} scheduleId={record.scheduleId}/>
                 </Space>
             ),
         },
 
-    ].filter(col => col.dataIndex !== 'version');
+    ].filter(col => col.dataIndex !== 'version' );
 
 
     onMovieSelect = () => {
@@ -68,6 +74,7 @@ class Movie extends React.Component {
                 this.setState(
                     {
                         movieList: data.data,
+                        page: 1,
                     }
                 )
             }

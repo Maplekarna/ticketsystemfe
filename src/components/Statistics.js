@@ -9,6 +9,11 @@ const columns = [
         key: 'showingId',
     },
     {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
         title: 'TicketsSold',
         dataIndex: 'ticketsSold',
         key: 'ticketsSold',

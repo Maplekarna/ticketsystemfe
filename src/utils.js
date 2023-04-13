@@ -118,7 +118,7 @@ export const getOrderHistory = () => {
 }
 
 
-const historyOnPageUrl = `${SERVER_ORIGIN}/moviesOnPage?page=`;
+const historyOnPageUrl = `${SERVER_ORIGIN}/orderHistoryOnPage?page=`;
 export const getHistoryOnPage = (page) => {
     return fetch(`${historyOnPageUrl}${page}`, {
         method: 'GET',

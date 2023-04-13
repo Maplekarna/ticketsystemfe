@@ -49,6 +49,7 @@ const OrderButton = (props) => {
       'showing_id': props.showing_id,
       'count': data.count,
       'version': props.version,
+      'scheduleId': props.scheduleId,
     }
 
     makeOrder(info).then(() => {
